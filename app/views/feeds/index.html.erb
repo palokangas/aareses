@@ -1,0 +1,16 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Feeds</h1>
+<%= button_to "Sync feeds", sync_feeds_path, method: :put %>
+
+ <div id="feeds">
+  <% @feeds.each do |feed| %>
+    <% if (feed.entries.length > 0) %>
+    <ul>
+      <li> <%= link_to feed.title, feed %> </li>
+    </ul>
+    <% end %>
+  <% end %>
+</div>
+
+<!--%= link_to "New feed", new_feed_path % -->

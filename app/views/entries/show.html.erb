@@ -1,0 +1,12 @@
+<p style="color: green"><%= notice %></p>
+
+<h2><%= @entry.title %></h2>
+<strong><%= @entry.feed.title %></strong>
+<i>(julkaistu: <%= @entry.published_at&.localtime&.strftime("%d.%m.%Y kello %H:%M") %>)</i>
+
+<%= raw(@entry.content) %>
+<div>
+  <%= link_to "Back to entries", feed_path(@entry.feed) %>
+  <%= button_to "Mark read", @entry, method: :delete %>
+  <br />
+</div>

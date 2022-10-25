@@ -1,0 +1,14 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @feed %>
+
+<h2><%= @feed.title %></h2>
+<% @feed.entries.each do |entry| %>
+  <ul>
+    <li> <%= link_to entry.title, entry %> <%= button_to "mark read", entry, method: :delete, form: {style: 'display:inline-block;'} %></li>
+  </ul>
+<% end %>
+
+<div>
+  <%= link_to "Back to feeds", feeds_path %>
+</div>

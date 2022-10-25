@@ -1,0 +1,2 @@
+class FeedSetting < ApplicationRecord
+end
