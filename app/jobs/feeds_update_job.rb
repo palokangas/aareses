@@ -36,14 +36,18 @@ class FeedsUpdateJob < ApplicationJob
 
   # Update all entries on all feeds one feed at a time
   def update_entries(new_feed_ids, client)
-    new_feed_ids.each do |id|
-      feed_id = Feed.find_by(external_id: id)&.id
-      new_entries = client.entries_for(feed_ext_id: id)
+    new_feed_ids.each do |ext_id|
+      feed_id = Feed.find_by(external_id: ext_id)&.id
+      new_entries = client.entries_for(feed_ext_id: ext_id)
       new_entry_ids = new_entries["entries"]&.map { |entry| entry["id"] }
       logger.debug("Destroying entries that were removed from server")
-      Entry.where(feed_id: id).where.not(external_id: [new_entry_ids]).destroy_all
+
+      existing_entries = Entry.where(feed_id: feed_id)
+      existing_entries.where.not(external_id: [new_entry_ids]).destroy_all
+      existing_entries_ids = existing_entries.pluck(:external_id)
 
       new_entries["entries"].each do |entry|
+        next if existing_entries_ids.include?(entry["id"])
         Entry.create(
           external_id: entry["id"],
           title: entry["title"],
