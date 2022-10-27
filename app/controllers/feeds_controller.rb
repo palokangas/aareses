@@ -1,13 +1,19 @@
 class FeedsController < ApplicationController
-  before_action :set_feed, only: %i[ show edit update destroy ]
+  before_action :set_feed, only: %i[ show edit update destroy mark_read ]
 
   # GET /feeds or /feeds.json
   def index
-    @feeds = Feed.all
+    @feeds = Feed.all.sort_by { |f| f.title }
   end
 
   # GET /feeds/1 or /feeds/1.json
   def show
+  end
+
+  def mark_read
+    @feed.entries.destroy_all
+    FeedsUpdateJob.perform_later(command: "mark_feed_read", id: @feed.external_id)
+    redirect_to feeds_url, notice: "Feed #{@feed.title} marked read."
   end
 
   def sync

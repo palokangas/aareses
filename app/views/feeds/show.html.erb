@@ -4,12 +4,15 @@
   <%= link_to "Back to feeds", feeds_path %>
 </div>
 
-<%= render @feed %>
 
 <h2><%= @feed.title %></h2>
-<% @feed.entries.each do |entry| %>
+  <%= button_to "Mark all entries read", mark_read_feed_url(@feed.id), method: :put %>
+  <% @feed.entries.sort_by { |e| e.published_at }.reverse.each do |entry| %>
   <ul>
-    <li> <%= link_to entry.title, entry %> <%= button_to "mark read", entry, method: :delete, form: {style: 'display:inline-block;'} %></li>
+    <li> <%= button_to "mark read", entry, method: :delete, form: {style: 'display:inline-block;'} %>
+             <%= link_to entry.title, entry %>
+             <span style="color:gray;font-size:85%">(<%= entry.published_at.strftime("%d.%m.%Y") %>)</span>
+    </li>
   </ul>
 <% end %>
 

@@ -4,6 +4,9 @@
 <strong><%= @entry.feed.title %></strong>
 <i>(julkaistu: <%= @entry.published_at&.localtime&.strftime("%d.%m.%Y kello %H:%M") %>)</i>
 
+<a href="<%= @entry.url %>" target="_blank">View original</a>
+<br />
+<br />
 <%= raw(@entry.content) %>
 <div>
   <%= link_to "Back to entries", feed_path(@entry.feed) %>

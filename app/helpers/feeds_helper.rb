@@ -16,6 +16,17 @@ module FeedsHelper
       self.class.get("/feeds", headers: @headers)
     end
 
+    def mark_feed_read(id)
+      response = self.class.put("/feeds/#{id}/mark-all-as-read", headers: @headers)
+
+      if response.success?
+        debug "Succesfully marked feed #{id} read on server."
+      else
+        res_json = JSON.parse(response.body)
+        debug "Error when marking feed #{id} read on server. Server returned #{res_json["error_message"]}"
+      end
+    end
+
     def mark_entry_read(id)
       body = {
         entry_ids: [id],

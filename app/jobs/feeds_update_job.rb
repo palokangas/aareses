@@ -17,6 +17,8 @@ class FeedsUpdateJob < ApplicationJob
       full_update(client, user)
     when "mark_entry_read"
       client.mark_entry_read(id)
+    when "mark_feed_read"
+      client.mark_feed_read(id)
     end
   end
 

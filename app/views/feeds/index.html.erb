@@ -7,7 +7,7 @@
   <% @feeds.each do |feed| %>
     <% if (feed.entries.length > 0) %>
     <ul>
-      <li> <%= link_to feed.title, feed %> </li>
+      <li> <%= link_to feed.title, feed %> <span style="font-size:85%; color:gray">(<%= feed.entries.length %>)</span> </li>
     </ul>
     <% end %>
   <% end %>
