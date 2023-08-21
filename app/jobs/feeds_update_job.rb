@@ -50,6 +50,7 @@ class FeedsUpdateJob < ApplicationJob
 
       new_entries["entries"].each do |entry|
         next if existing_entries_ids.include?(entry["id"])
+
         Entry.create(
           external_id: entry["id"],
           title: entry["title"],

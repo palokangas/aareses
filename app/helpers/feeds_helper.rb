@@ -1,10 +1,11 @@
 module FeedsHelper
+  # Class to handle the syncing with Miniflux-API
   class Miniflux
     include HTTParty
-    base_uri 'https://uutistutka.fi/rss/v1'
+    base_uri "https://uutistutka.fi/rss/v1"
 
     def initialize(token)
-      @headers = { "X-Auth-Token" => token}
+      @headers = { "X-Auth-Token" => token }
       @logger = Rails.logger
     end
 
@@ -23,7 +24,7 @@ module FeedsHelper
         debug "Succesfully marked feed #{id} read on server."
       else
         res_json = JSON.parse(response.body)
-        debug "Error when marking feed #{id} read on server. Server returned #{res_json["error_message"]}"
+        debug "Error when marking feed #{id} read on server. Server returned #{res_json['error_message']}"
       end
     end
 
@@ -33,16 +34,19 @@ module FeedsHelper
         status: "read"
       }.to_json
 
-      response = self.class.put("/entries", {
-        body: body,
-        headers: @headers.merge({'Content-Type' => 'application/json'})
-      })
+      response = self.class.put(
+        "/entries",
+        {
+          body:,
+          headers: @headers.merge({ "Content-Type" => "application/json" })
+        }
+      )
 
       if response.success?
         debug "Succesfully marked entry #{id} read on server."
       else
         res_json = JSON.parse(response.body)
-        debug "Error when marking entry #{id} read on server. Server returned #{res_json["error_message"]}"
+        debug "Error when marking entry #{id} read on server. Server returned #{res_json['error_message']}"
       end
     end
 

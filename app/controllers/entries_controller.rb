@@ -1,5 +1,6 @@
+# Controller handling feed entries
 class EntriesController < ApplicationController
-  before_action :set_entry, only: %i[ show edit update destroy ]
+  before_action :set_entry, only: %i[show edit update destroy]
 
   # GET /entries or /entries.json
   def index
@@ -55,19 +56,20 @@ class EntriesController < ApplicationController
 
     respond_to do |format|
       format.html { redirect_to feed_url(@entry.feed), notice: "Entry marked read." }
-      #format.html { redirect_to entries_url, notice: "Entry was successfully destroyed." }
+      # format.html { redirect_to entries_url, notice: "Entry was successfully destroyed." }
       format.json { head :no_content }
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_entry
-      @entry = Entry.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def entry_params
-      params.fetch(:entry, {})
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_entry
+    @entry = Entry.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def entry_params
+    params.fetch(:entry, {})
+  end
 end

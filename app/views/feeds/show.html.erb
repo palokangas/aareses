@@ -8,6 +8,7 @@
 <h2><%= @feed.title %></h2>
   <%= button_to "Mark all entries read", mark_read_feed_url(@feed.id), method: :put %>
   <% @feed.entries.sort_by { |e| e.published_at }.reverse.each do |entry| %>
+  <%= render "entries/entry" %>
   <ul>
     <li> <%= button_to "mark read", entry, method: :delete, form: {style: 'display:inline-block;'} %>
              <%= link_to entry.title, entry %>
